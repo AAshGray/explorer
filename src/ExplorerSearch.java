@@ -45,6 +45,51 @@ public class ExplorerSearch {
                 }
             }
         }
+
+       // you didn't give explicit instructions for a missing explorer so I am doing it the same as on the live code assignment
+
+       // if this was an undesirable result, a missing explorer could also set the start location out of bounds {-1, -1} with a check that returns 0 total moves for that starting location (if there's no explorer on the island, 0 "squares" are explorable)
        throw new IllegalArgumentException("No explorer on the island.");
+    }
+
+    public static List<int[]> possibleMoves(int[][] island, int[] current) {
+        List<int[]> moves = new ArrayList<>();
+
+        int curR = current[0];
+        int curC = current[1];
+
+
+        // up
+        int newR = curR - 1;
+        int newC = curC;
+
+        if (newR >= 0 && island[newR][newC] == 1) {
+            moves.add(new int[]{newR, newC});
+        }
+
+        // down
+        newR = curR + 1;
+        newC = curC;
+
+        if (newR < island.length && island[newR][newC] == 1) {
+            moves.add(new int[]{newR, newC});
+        }
+        // left
+        newR = curR;
+        newC = curC - 1;
+
+        if (newC >= 0 && island[newR][newC] == 1) {
+            moves.add(new int[] {newR, newC});
+        }
+
+        // right
+        newR = curR;
+        newC = curC + 1;
+
+        if (newC < island[newR].length && island[newR][newC] == 1) {
+            moves.add(new int[] {newR, newC});
+        }
+
+        return moves;
     }
 }

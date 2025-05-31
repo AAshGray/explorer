@@ -1,7 +1,17 @@
 import static org.junit.Assert.*;
+
+import java.util.List;
+
 import org.junit.Test;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
+
 public class ExplorerSearchTest {
+    private static final String Set = null;
+
     @Test
     public void testReachableArea_someUnreachable() {
         int[][] island = {
@@ -118,5 +128,124 @@ public class ExplorerSearchTest {
         });
 
         assertEquals("No explorer on the island.", exception.getMessage());
+    }
+
+    @Test
+    public void testPossibleMoves_allDirections() {
+        int[][] island = {
+            {1, 1, 1},
+            {1, 0, 1},
+            {1, 1, 1}
+        };
+
+        int[] start = {1, 1};
+        
+        List<int[]> moves = ExplorerSearch.possibleMoves(island, start);
+        Set<String> movesStrings = toSet(moves);
+        
+        
+        assertTrue(movesStrings.contains("0,1"));
+        assertTrue(movesStrings.contains("1,0"));
+        assertTrue(movesStrings.contains("1,2"));
+        assertTrue(movesStrings.contains("2,1"));
+    }
+
+        @Test
+    public void testPossibleMoves_SurroundedByOcean() {
+        int[][] island = {
+            {2, 2, 2},
+            {2, 0, 2},
+            {2, 2, 2}
+        };
+
+        int[] start = {1, 1};
+        
+        List<int[]> moves = ExplorerSearch.possibleMoves(island, start);
+        Set<String> movesStrings = toSet(moves);
+        
+        
+        assertTrue(movesStrings.isEmpty());
+    }
+
+    @Test
+    public void testPossibleMoves_SurroundedByMountains() {
+        int[][] island = {
+            {3, 3, 3},
+            {3, 0, 3},
+            {3, 3, 3}
+        };
+
+        int[] start = {1, 1};
+        
+        List<int[]> moves = ExplorerSearch.possibleMoves(island, start);
+        Set<String> movesStrings = toSet(moves);
+        
+        
+        assertTrue(movesStrings.isEmpty());
+    }
+
+    @Test
+    public void testPossibleMoves_SinglePoint() {
+        int[][] island = {
+            {0}
+        };
+
+        int[] start = {0, 0};
+        
+        List<int[]> moves = ExplorerSearch.possibleMoves(island, start);
+        Set<String> movesStrings = toSet(moves);
+        
+        
+        assertTrue(movesStrings.isEmpty());
+    }
+
+    @Test
+    public void testPossibleMoves_CanGoSouthAndWest() {
+        int[][] island = {
+            {3, 3, 3},
+            {1, 0, 3},
+            {3, 1, 3}
+        };
+
+        int[] start = {1, 1};
+        
+        List<int[]> moves = ExplorerSearch.possibleMoves(island, start);
+        Set<String> movesStrings = toSet(moves);
+        
+        assertEquals(movesStrings.size(), 2);
+        assertFalse(movesStrings.contains("0,1"));
+        assertTrue(movesStrings.contains("1,0"));
+        assertFalse(movesStrings.contains("1,2"));
+        assertTrue(movesStrings.contains("2,1"));
+    }
+
+        @Test
+    public void testPossibleMoves_CanNorthAndEast() {
+        int[][] island = {
+            {3, 1, 1},
+            {2, 0, 1},
+            {3, 2, 3}
+        };
+
+        int[] start = {1, 1};
+        
+        List<int[]> moves = ExplorerSearch.possibleMoves(island, start);
+        Set<String> movesStrings = toSet(moves);
+        
+        assertEquals(movesStrings.size(), 2);
+        assertTrue(movesStrings.contains("0,1"));
+        assertFalse(movesStrings.contains("1,0"));
+        assertTrue(movesStrings.contains("1,2"));
+        assertFalse(movesStrings.contains("2,1"));
+    }
+
+    // reused this from the in-class assignment
+    private Set<String> toSet(List<int[]> moves) {
+        Set<String> set = new HashSet<>();
+        for (int[] move : moves) {
+            set.add(move[0] + "," + move[1]);
+        }
+
+        return set;
     }
 }
