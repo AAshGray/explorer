@@ -99,9 +99,12 @@ public class ExplorerSearchTest {
             {3,1,2,1,1,2},
             {2,1,1,2,3,1},
         };
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            ExplorerSearch.explorerLocation(island);
-        });
+        
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> 
+            {
+                ExplorerSearch.explorerLocation(island);
+            }
+        );
 
         assertEquals("No explorer on the island.", exception.getMessage());
     }
