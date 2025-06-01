@@ -219,7 +219,7 @@ public class ExplorerSearchTest {
         assertTrue(movesStrings.contains("2,1"));
     }
 
-        @Test
+    @Test
     public void testPossibleMoves_CanNorthAndEast() {
         int[][] island = {
             {3, 1, 1},
@@ -237,6 +237,21 @@ public class ExplorerSearchTest {
         assertFalse(movesStrings.contains("1,0"));
         assertTrue(movesStrings.contains("1,2"));
         assertFalse(movesStrings.contains("2,1"));
+    }
+
+    @Test
+    public void testPossibleMoves_NoDiagonal() {
+        int[][] island = {
+            {0, 2},
+            {3, 1}
+        };
+
+        int[] start = ExplorerSearch.explorerLocation(island);
+        
+        List<int[]> moves = ExplorerSearch.possibleMoves(island, start);
+        Set<String> movesStrings = toSet(moves);
+        
+        assertTrue(movesStrings.isEmpty());
     }
 
     // reused this from the in-class assignment
